@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Configure and restart Nginx as the nginx user
+pkill apache2 2>/dev/null || true
+sed -i '/^[[:space:]]*user[[:space:]]/d; 1i user nginx;' /etc/nginx/nginx.conf
+sed -i 's/\<80\>/&80/' /etc/nginx/sites-available/default
+chmod 644 /etc/nginx/nginx.conf
+su -s /bin/sh nginx -c 'service nginx restart'
